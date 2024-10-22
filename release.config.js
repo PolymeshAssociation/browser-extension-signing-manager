@@ -1,7 +1,11 @@
 module.exports = {
-  repositoryUrl: 'https://github.com/PolymeshAssociation/typescript-boilerplate.git',
+  repositoryUrl: 'https://github.com/PolymeshAssociation/browser-extension-signing-manager.git',
   branches: [
     'master',
+    {
+      name: 'alpha',
+      prerelease: true,
+    },
     {
       name: 'beta',
       prerelease: true,

@@ -1,7 +1,7 @@
 {
-  "name": "typescript-repo-template",
+  "name": "@polymeshassociation/browser-extension-signing-manager",
   "version": "0.0.0",
-  "description": "Template repository for typescript projects",
+  "description": "Polymesh SDK signing manager for signing transaction within a web browser",
   "types": "dist/index.d.ts",
   "author": "Polymesh Association",
   "license": "ISC",
@@ -13,6 +13,10 @@
     "semantic-release": "semantic-release",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "format": "cross-env prettier-eslint $PWD\"/src/**/*.{ts,tsx,js,jsx,json,css,md}\" --write"
+  },
+  "dependencies": {
+    "@polymeshassociation/signing-manager-types": "^3.3.0",
+    "@polkadot/extension-dapp": "^0.47.4"
   },
   "devDependencies": {
     "@commitlint/cli": "17.5.1",
@@ -57,5 +61,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PolymeshAssociation/browser-extension-signing-manager.git"
   }
 }
