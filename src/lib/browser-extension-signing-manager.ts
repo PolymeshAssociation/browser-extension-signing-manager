@@ -15,9 +15,9 @@ export class BrowserExtensionSigningManager implements SigningManager {
    *
    * @param args.appName - name of the dApp attempting to connect to the extension
    * @param args.extensionName - name of the extension to be used (optional, defaults to 'polywallet')
-   * @param args.ss58Format - SS58 format for the extension in which the returned addresses will be encoded(optional)
-   * @param args.genesisHash - genesis hash to be used in filtering the accounts returned by the extension
-   * @param args.accountTypes - account types to be used in filtering the accounts returned by the extension
+   * @param args.ss58Format - SS58 format for the extension in which the returned addresses will be encoded (optional)
+   * @param args.genesisHash - genesis hash to be used in filtering the accounts returned by the extension (optional)
+   * @param args.accountTypes - account types to be used in filtering the accounts returned by the extension (optional, by default it excludes 'ethereum' type)
    *
    * @note if this is the first time the user is interacting with the dApp using that specific extension,
    *   they will be prompted by the extension to add the dApp to the allowed list
@@ -77,14 +77,37 @@ export class BrowserExtensionSigningManager implements SigningManager {
     this._accountTypes = accountTypes;
   }
 
+  private isAccountTypeValid(account: InjectedAccount): boolean {
+    // If account has no type, it's valid
+    if (!account.type) {
+      return true;
+    }
+
+    // If no account types specified but account is ethereum, it's invalid
+    if (!this._accountTypes && account.type === 'ethereum') {
+      return false;
+    }
+
+    // If account types specified, check if account type is included
+    return !this._accountTypes || this._accountTypes.includes(account.type);
+  }
+
+  private isGenesisHashValid(account: InjectedAccount): boolean {
+    // If account has no genesis hash or no genesis hash specified, it's valid
+    if (!account.genesisHash || !this._genesisHash) {
+      return true;
+    }
+
+    // Check if genesis hash matches
+    return account.genesisHash === this._genesisHash;
+  }
+
   /**
    * Returns the list of account available for the extension. Filters the list of accounts based on genesis hash and account type
    */
   private getWeb3Accounts(accounts: InjectedAccount[]): InjectedAccount[] {
     return accounts.filter(
-      (account) =>
-        (!account.type || !this._accountTypes || this._accountTypes.includes(account.type)) &&
-        (!account.genesisHash || !this._genesisHash || account.genesisHash === this._genesisHash)
+      (account) => this.isAccountTypeValid(account) && this.isGenesisHashValid(account)
     );
   }
 
