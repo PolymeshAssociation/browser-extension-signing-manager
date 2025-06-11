@@ -59,7 +59,7 @@ jobs:
       - name: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.ASSOCIATION_NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.BESM_NPM_RELEASE_TOKEN }}
         run: |
           cd dist
           yarn --frozen-lockfile
