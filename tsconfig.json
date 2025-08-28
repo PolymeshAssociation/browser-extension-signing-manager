@@ -22,7 +22,8 @@
     "resolveJsonModule": true,
     "lib": ["es2017", "dom"],
     "typeRoots": ["./node_modules/@types", "./src/typings"],
+    "types": ["@types/jest"],
     "skipLibCheck": true
   },
-  "exclude": ["dist", "node_modules", "test.ts"]
+  "exclude": ["dist", "node_modules"]
 }

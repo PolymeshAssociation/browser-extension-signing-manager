@@ -7,3 +7,9 @@ npm-package/
 coverage/
 test.ts
 docs/
+
+# Yarn 4 cache and state files
+.yarn/cache/
+.yarn/install-state.gz
+.yarn/unplugged/
+.yarn/build-state.yml

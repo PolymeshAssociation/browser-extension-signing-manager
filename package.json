@@ -15,16 +15,16 @@
     "format": "cross-env prettier-eslint $PWD\"/src/**/*.{ts,tsx,js,jsx,json,css,md}\" --write"
   },
   "dependencies": {
-    "@polymeshassociation/signing-manager-types": "^3.3.0",
-    "@polkadot/extension-dapp": "^0.47.4"
+    "@polkadot/extension-dapp": "^0.47.4",
+    "@polymeshassociation/signing-manager-types": "^3.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "17.5.1",
     "@commitlint/config-conventional": "17.4.4",
     "@golevelup/ts-jest": "^0.5.6",
-    "@types/jest-when": "^3.5.5",
     "@semantic-release/changelog": "^6.0.3",
     "@types/jest": "27.4.0",
+    "@types/jest-when": "^3.5.5",
     "@types/node": "18.15.11",
     "@typescript-eslint/eslint-plugin": "5.57.0",
     "@typescript-eslint/parser": "5.57.0",
