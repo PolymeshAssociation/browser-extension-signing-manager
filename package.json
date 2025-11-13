@@ -15,8 +15,8 @@
     "format": "cross-env prettier-eslint $PWD\"/src/**/*.{ts,tsx,js,jsx,json,css,md}\" --write"
   },
   "dependencies": {
-    "@polkadot/extension-dapp": "^0.47.4",
-    "@polymeshassociation/signing-manager-types": "^3.3.0"
+    "@polkadot/extension-dapp": "^0.62.4",
+    "@polymeshassociation/signing-manager-types": "^3.5.0"
   },
   "devDependencies": {
     "@commitlint/cli": "17.5.1",
