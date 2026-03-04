@@ -67,6 +67,8 @@ jobs:
         run: |
           yarn build:ts
           sed 's/dist\//.\//' package.json > dist/package.json
+          cp yarn.lock dist/yarn.lock
+          cp .yarnrc.yml dist/.yarnrc.yml
           cp README.md dist/README.md
       - name: release
         env:
