@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 8
+  version: 9
   cacheKey: 10c0
 
 "@actions/core@npm:^3.0.0":
@@ -2073,7 +2073,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:17.4.4"
     "@golevelup/ts-jest": "npm:^0.5.6"
     "@polkadot/extension-dapp": "npm:^0.62.4"
-    "@polymeshassociation/signing-manager-types": "npm:^3.5.0"
+    "@polymeshassociation/signing-manager-types": "npm:^3.7.1"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@types/jest": "npm:27.4.0"
     "@types/jest-when": "npm:^3.5.5"
@@ -2108,12 +2108,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@polymeshassociation/signing-manager-types@npm:^3.5.0":
-  version: 3.5.0
-  resolution: "@polymeshassociation/signing-manager-types@npm:3.5.0"
+"@polymeshassociation/signing-manager-types@npm:^3.7.1":
+  version: 3.7.1
+  resolution: "@polymeshassociation/signing-manager-types@npm:3.7.1"
   dependencies:
     "@polkadot/api": "npm:16.5.2"
-  checksum: 10c0/678ef3aed246c850a8fa5446d12c0c1ef64b279572843492a572f16833671b7c5abdd6d6f25993cea1203ab8b55db724e1c29b7a5e9f7ffca2b7a3520200c6ab
+  checksum: 10c0/a6e29495be2547852be80923c1aabffe5ec545a3acb6d85333f3577625ceb836a818ae8cd735a1dc89504b60e98a87f05e39bb66ff6d77bdeea57542a7a255f2
   languageName: node
   linkType: hard
 
