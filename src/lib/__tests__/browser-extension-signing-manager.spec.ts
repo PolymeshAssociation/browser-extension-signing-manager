@@ -38,6 +38,17 @@ describe('BrowserExtensionSigningManager Class', () => {
       genesisHash: 'someHash',
       type: 'sr25519',
     },
+    {
+      name: 'ACCOUNT 3',
+      address: '5HQLVKFYkytr9HisQRWoUArUWw8YNWUmhLdXztRFjqysiNUx',
+      genesisHash: 'someHash',
+    },
+    {
+      name: 'ACCOUNT 4',
+      address: '0xBFd02b95A0BA36807902d1c31b66EDae90ec2151',
+      genesisHash: 'someHash',
+      type: 'ethereum',
+    },
   ];
 
   beforeAll(() => {
@@ -87,6 +98,8 @@ describe('BrowserExtensionSigningManager Class', () => {
       await BrowserExtensionSigningManager.create({
         appName: 'someOtherApp',
         ss58Format: 42,
+        accountTypes: ['ecdsa', 'ed25519', 'sr25519'],
+        genesisHash: 'someHash',
       });
       expect(enableWeb3ExtensionMock).toHaveBeenCalledTimes(1);
       expect(enableWeb3ExtensionMock).toHaveBeenCalledWith('someOtherApp', extensionName);
@@ -99,13 +112,15 @@ describe('BrowserExtensionSigningManager Class', () => {
 
       let result = await signingManager.getAccounts();
 
-      expect(result).toEqual(accounts.map(({ address }) => address));
+      expect(result).toEqual(accounts.slice(0, -1).map(({ address }) => address));
 
       signingManager.setSs58Format(0);
 
       result = await signingManager.getAccounts();
 
-      expect(result).toEqual(accounts.map(({ address }) => changeAddressFormat(address, 0)));
+      expect(result).toEqual(
+        accounts.slice(0, -1).map(({ address }) => changeAddressFormat(address, 0))
+      );
     });
 
     it("should throw an error if the Signing Manager doesn't have a SS58 format", async () => {
@@ -122,7 +137,7 @@ describe('BrowserExtensionSigningManager Class', () => {
       networkAgnosticSigningManager.setGenesisHash('someHash');
       networkAgnosticSigningManager.setAccountTypes(['ed25519']);
       const result = await networkAgnosticSigningManager.getAccounts();
-      expect(result.length).toEqual(1);
+      expect(result.length).toEqual(2);
     });
   });
 
@@ -133,7 +148,7 @@ describe('BrowserExtensionSigningManager Class', () => {
       let result = await signingManager.getAccountsWithMeta();
 
       expect(result).toEqual(
-        accounts.map(({ address, genesisHash, name, type }) => ({
+        accounts.slice(0, -1).map(({ address, genesisHash, name, type }) => ({
           address,
           meta: { genesisHash, name, source: extensionName },
           type,
@@ -145,7 +160,7 @@ describe('BrowserExtensionSigningManager Class', () => {
       result = await signingManager.getAccountsWithMeta();
 
       expect(result).toEqual(
-        accounts.map(({ address, genesisHash, name, type }) => ({
+        accounts.slice(0, -1).map(({ address, genesisHash, name, type }) => ({
           address: changeAddressFormat(address, 0),
           meta: { genesisHash, name, source: extensionName },
           type,
@@ -173,14 +188,15 @@ describe('BrowserExtensionSigningManager Class', () => {
 
   describe('method: onAccountChange', () => {
     it('should pass the new Accounts to the callback, respecting the SS58 format', () => {
+      const validAccounts = accounts.slice(0, -1);
       accountsSubscribeStub.mockImplementation((cb) => {
-        cb(accounts);
+        cb(validAccounts);
       });
 
       const callback = jest.fn();
       signingManager.onAccountChange(callback, false);
 
-      expect(callback).toHaveBeenCalledWith(accounts.map(({ address }) => address));
+      expect(callback).toHaveBeenCalledWith(validAccounts.map(({ address }) => address));
 
       signingManager.setSs58Format(0);
 
@@ -188,7 +204,7 @@ describe('BrowserExtensionSigningManager Class', () => {
       signingManager.onAccountChange(callback);
 
       expect(callback).toHaveBeenCalledWith(
-        accounts.map(({ address }) => changeAddressFormat(address, 0))
+        validAccounts.map(({ address }) => changeAddressFormat(address, 0))
       );
 
       signingManager.setSs58Format(42);
@@ -196,7 +212,7 @@ describe('BrowserExtensionSigningManager Class', () => {
       callback.mockReset();
       signingManager.onAccountChange(callback, true);
 
-      expect(callback).toHaveBeenCalledWith(mapAccounts(extensionName, accounts, 42));
+      expect(callback).toHaveBeenCalledWith(mapAccounts(extensionName, validAccounts, 42));
     });
 
     it("should throw an error if the Signing Manager doesn't have a SS58 format", async () => {
